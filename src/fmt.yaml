@@ -75,3 +75,19 @@
     name:
       # TODO: Check if works on older OSes.
       - black
+
+# Stylish haskell
+- name: "stylish-haskell: check if installed"
+  shell:
+    cmd: |
+      . "${HOME}/.profile"
+      stylish-haskell --version
+  register: stylish_haskell_installed
+  ignore_errors: true
+  changed_when: false
+- name: "stylish-haskell: install"
+  when: stylish_haskell_installed is failed
+  shell:
+    cmd: |
+      . "${HOME}/.profile"
+      cabal install stylish-haskell
