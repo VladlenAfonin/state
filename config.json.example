@@ -1,0 +1,10 @@
+{
+    "external": {
+        "git": {
+            "user": {
+                "name": "biba",
+                "email": "boba@example.com"
+            }
+        }
+    }
+}

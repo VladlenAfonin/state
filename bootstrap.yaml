@@ -3,7 +3,7 @@
   gather_facts: true
   vars:
     current_user: "{{ ansible_env.USER }}"
-    current_shell: "{{ ansible_env.SHELL }}"
+    current_shell: "/bin/bash"
   pre_tasks:
     - name: Update and upgrade.
       become: true
@@ -26,3 +26,5 @@
     - include_tasks: tmux.yaml
     - include_tasks: rust.yaml
     - include_tasks: node.yaml
+    - include_tasks: fmt.yaml
+    - include_tasks: lsp.yaml

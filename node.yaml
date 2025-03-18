@@ -1,6 +1,8 @@
 ---
 - name: "nvm: check if installed"
-  shell: nvm --version
+  shell: |
+    [ -s "${HOME}/.nvm/nvm.sh" ] && source "${HOME}/.nvm/nvm.sh"
+    nvm --version
   register: nvm_installed
   ignore_errors: true
   changed_when: false
@@ -19,7 +21,10 @@
   args:
     executable: "{{ current_shell }}"
 - name: "node: install"
-  shell: nvm install latest
+  shell: |
+    source "${HOME}/.nvm/nvm.sh"
+    nvm install node
+    nvm use node
   when: nvm_installed is failed
   args:
     executable: "{{ current_shell }}"

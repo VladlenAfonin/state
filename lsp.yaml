@@ -1,0 +1,25 @@
+---
+- name: "lua-language-server: check if installed"
+  stat:
+    path: "{{ ansible_env.HOME }}/apps/lua-language-server"
+  register: lls_status
+  ignore_errors: true
+  changed_when: false
+- name: "lua-language-server: clone"
+  when: not lls_status.stat.exists
+  git:
+    repo: "https://github.com/LuaLS/lua-language-server"
+    dest: "{{ ansible_env.HOME }}/projects/lua-language-server"
+    version: "3.13.9"
+    depth: 1
+- name: "lua-language-server: build"
+  when: not lls_status.stat.exists
+  command: ./make.sh
+  args:
+    chdir: "{{ ansible_env.HOME }}/projects/lua-language-server"
+- name: "lua-language-server: install"
+  when: not lls_status.stat.exists
+  file:
+    src: "{{ ansible_env.HOME }}/projects/lua-language-server"
+    dest: "{{ ansible_env.HOME }}/apps/lua-language-server"
+    state: link

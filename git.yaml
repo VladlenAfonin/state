@@ -12,4 +12,4 @@
     dest: "{{ ansible_env.HOME }}/.gitconfig"
     mode: "0644"
   vars:
-    user: { name: "{{ ansible_env.USER }}", email: "{{ external.email }}" }
+    user: { name: "{{ external.git.user.name }}", email: "{{ external.git.user.email }}" }
