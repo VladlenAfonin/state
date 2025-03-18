@@ -39,7 +39,7 @@ Note that this is a complete development environment that takes a significant am
    ansible-galaxy collection install community.general
    ```
 
-   In case you do not have Ansible of version CHANGEME you can still try the following command:
+   In case you do not have Ansible of version >= 2.13.9 you can still try the following command:
 
    ```bash
    ansible-galaxy install -r requirements.yml --server="https://old-galaxy.ansible.com" --ignore-certs
