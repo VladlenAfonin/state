@@ -1,0 +1,22 @@
+---
+- name: "rustup: check if installed"
+  shell: rustc --version
+  register: cargo_exists
+  changed_when: false
+  ignore_errors: true
+  tags:
+    - rust
+- name: "rustup: download"
+  when: cargo_exists is failed
+  get_url:
+    url: https://sh.rustup.rs
+    dest: /tmp/rustup.sh
+    mode: "0755"
+    force: "yes"
+  tags:
+    - rust
+- name: "rustup: install"
+  when: cargo_exists is failed
+  shell: /tmp/rustup.sh -y
+  tags:
+    - rust

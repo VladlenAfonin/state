@@ -1,0 +1,13 @@
+---
+- name: "tmux: install"
+  become: true
+  apt:
+    name:
+      - tmux
+    state: present
+    update_cache: yes
+- name: "tmux: install configuration"
+  template:
+    src: templates/.tmux.conf.j2
+    dest: "{{ ansible_env.HOME }}/.tmux.conf"
+    mode: "0644"

@@ -1,0 +1,15 @@
+---
+- name: "git: install"
+  become: true
+  apt:
+    name:
+      - git
+    state: present
+    update_cache: yes
+- name: "git: install configuration"
+  template:
+    src: templates/.gitconfig.j2
+    dest: "{{ ansible_env.HOME }}/.gitconfig"
+    mode: "0644"
+  vars:
+    user: { name: "{{ ansible_env.USER }}", email: "{{ external.email }}" }

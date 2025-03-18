@@ -1,0 +1,48 @@
+---
+- name: "neovim: check if installed"
+  stat:
+    path: "{{ ansible_env.HOME }}/apps/neovim"
+  register: neovim_status
+  ignore_errors: true
+  changed_when: false
+  tags:
+    - neovim
+- name: "neovim: install build dependencies"
+  when: not neovim_status.stat.exists
+  become: true
+  become_method: sudo
+  apt:
+    name:
+      - ninja-build
+      - gettext
+      - cmake
+      - unzip
+      - curl
+    state: present
+    update_cache: yes
+- name: "neovim: clone"
+  when: not neovim_status.stat.exists
+  git:
+    repo: "https://github.com/neovim/neovim.git"
+    dest: "{{ ansible_env.HOME }}/projects/neovim"
+    version: nightly
+    depth: 1
+- name: "neovim: build"
+  when: not neovim_status.stat.exists
+  command: make install CMAKE_INSTALL_PREFIX="${HOME}/apps/neovim" CMAKE_BUILD_TYPE=RelWithDebInfo
+  args:
+    chdir: "{{ ansible_env.HOME }}/projects/neovim"
+- name: "neovim: create configuration directories"
+  file:
+    path: "{{ ansible_env.HOME }}/.config/nvim/spell"
+    state: directory
+    mode: "0755"
+- name: "neovim: install configuration"
+  template:
+    src: templates/init.lua.j2
+    dest: "{{ ansible_env.HOME }}/.config/nvim/init.lua"
+    mode: "0644"
+- name: "neovim: install spell files"
+  get_url:
+    url: https://ftp.pl.vim.org/pub/vim/runtime/spell/ru.utf-8.spl
+    dest: "{{ ansible_env.HOME }}/.config/nvim/spell/ru.utf-8.spl"

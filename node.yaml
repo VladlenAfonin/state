@@ -1,0 +1,25 @@
+---
+- name: "nvm: check if installed"
+  shell: nvm --version
+  register: nvm_installed
+  ignore_errors: true
+  changed_when: false
+  args:
+    executable: "{{ current_shell }}"
+- name: "nvm: download"
+  when: nvm_installed is failed
+  get_url:
+    url: https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.2/install.sh
+    dest: /tmp/install.sh
+    mode: "0755"
+    force: "yes"
+- name: "nvm: install"
+  when: nvm_installed is failed
+  shell: /tmp/install.sh
+  args:
+    executable: "{{ current_shell }}"
+- name: "node: install"
+  shell: nvm install latest
+  when: nvm_installed is failed
+  args:
+    executable: "{{ current_shell }}"

@@ -1,0 +1,10 @@
+---
+- name: update development machine
+  hosts: localhost
+  vars:
+    current_shell: "{{ ansible_env.SHELL }}"
+  tasks:
+    - name: "sample print"
+      debug:
+        msg: "{{ current_shell }}"
+

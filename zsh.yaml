@@ -1,0 +1,27 @@
+---
+- name: "zsh: install"
+  become: true
+  apt:
+    name:
+      - zsh
+    state: present
+    update_cache: yes
+- name: "zsh: install plugins"
+  git:
+    repo: "{{ item.repo }}"
+    version: "{{ item.version }}"
+    depth: 1
+    dest: "{{ ansible_env.HOME }}/projects/{{ item.name }}"
+  loop:
+    - { repo: "https://github.com/zsh-users/zsh-syntax-highlighting", version: "0.8.0", name: "zsh-syntax-highlighting" }
+    - { repo: "https://github.com/zsh-users/zsh-autosuggestions", version: "v0.7.1", name: "zsh-autosuggestions" }
+- name: "zsh: install configuration"
+  template:
+    src: templates/.zshrc.j2
+    dest: "{{ ansible_env.HOME }}/.zshrc"
+    mode: "0644"
+- name: "zsh: change shell"
+  become: yes
+  user:
+    name: "{{ current_user }}"
+    shell: /bin/zsh

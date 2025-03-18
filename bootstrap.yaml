@@ -1,0 +1,28 @@
+---
+- hosts: localhost
+  gather_facts: true
+  vars:
+    current_user: "{{ ansible_env.USER }}"
+    current_shell: "{{ ansible_env.SHELL }}"
+  pre_tasks:
+    - name: Update and upgrade.
+      become: true
+      changed_when: false
+      apt:
+        upgrade: true
+        update_cache: yes
+    - name: Create base directories.
+      file:
+        path: "{{ ansible_env.HOME }}/{{ item }}"
+        state: directory
+        mode: "0755"
+      loop:
+        - "projects"
+        - "apps"
+  tasks:
+    - include_tasks: git.yaml
+    - include_tasks: zsh.yaml
+    - include_tasks: neovim.yaml
+    - include_tasks: tmux.yaml
+    - include_tasks: rust.yaml
+    - include_tasks: node.yaml
