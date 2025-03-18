@@ -1,0 +1,48 @@
+---
+- name: "dotnet: check if installed"
+  shell: |
+    . "${HOME}/.profile"
+    dotnet --version
+  register: dotnet_installed
+  ignore_errors: true
+  changed_when: false
+- name: "dotnet: download (aarch64)"
+  when:
+    - dotnet_installed is failed
+    - ansible_architecture == "aarch64"
+  get_url:
+    url: "https://download.visualstudio.microsoft.com/download/pr/b24d4004-0073-4edd-9993-92fa5964eb94/2db4e2aee247349677597657d1ac467d/dotnet-sdk-8.0.407-linux-arm64.tar.gz"
+    dest: /tmp/dotnet.tar.gz
+    mode: "0644"
+    force: false
+- name: "dotnet: download (x86_64)"
+  when:
+    - dotnet_installed is failed
+    - ansible_architecture == "x86_64"
+  get_url:
+    url: "https://download.visualstudio.microsoft.com/download/pr/9d07577e-f7bc-4d60-838d-f79c50b5c11a/459ef339396783db369e0432d6dc3d7e/dotnet-sdk-8.0.407-linux-x64.tar.gz"
+    dest: /tmp/dotnet.tar.gz
+    mode: "0644"
+    force: false
+- name: "dotnet: create directory"
+  when: dotnet_installed is failed
+  file:
+    path: "{{ apps_dir }}/dotnet"
+    state: directory
+    mode: "0755"
+- name: "dotnet: extract"
+  when: dotnet_installed is failed
+  unarchive:
+    src: /tmp/dotnet.tar.gz
+    dest: "{{ apps_dir }}/dotnet"
+- name: "dotnet: create bin directory"
+  when: dotnet_installed is failed
+  file:
+    path: "{{ apps_dir }}/dotnet/bin"
+    state: directory
+    mode: "0755"
+- name: "dotnet: symlink executable"
+  file:
+    src: "{{ apps_dir }}/dotnet/dotnet"
+    dest: "{{ apps_dir }}/dotnet/bin/dotnet"
+    state: link

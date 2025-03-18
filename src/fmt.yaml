@@ -38,11 +38,21 @@
   register: shfmt_status
   ignore_errors: true
   changed_when: false
-- name: "shfmt: download"
-  when: shfmt_status is failed
+- name: "shfmt: download (amd64)"
+  when:
+    - shfmt_status is failed
+    - ansible_architecture == "x86_64"
   get_url:
-    # TODO: Replace OS and arch.
     url: "https://github.com/mvdan/sh/releases/download/{{ shfmt_version }}/shfmt_{{ shfmt_version }}_linux_amd64"
+    dest: /tmp/shfmt
+    mode: "0755"
+    force: "yes"
+- name: "shfmt: download (arm64)"
+  when:
+    - shfmt_status is failed
+    - ansible_architecture == "aarch64"
+  get_url:
+    url: "https://github.com/mvdan/sh/releases/download/{{ shfmt_version }}/shfmt_{{ shfmt_version }}_linux_arm64"
     dest: /tmp/shfmt
     mode: "0755"
     force: "yes"
@@ -59,3 +69,13 @@
     dest: "{{ apps_dir }}/shfmt/bin/shfmt"
     remote_src: true
     mode: "0755"
+
+# Black
+- name: "black: install"
+  become: true
+  apt:
+    name:
+      # TODO: Check if works on older OSes.
+      - black
+    state: present
+    update_cache: yes
