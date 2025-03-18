@@ -1,6 +1,8 @@
 # Virtual Machine State
 
-This is my virtual machine setup. It is expected to work on both x86_64 and aarch64 Debian Linux of versions 10 to 12. Note that this is a complete development environment that takes a significant amount of disk space (~20GB).
+This is my virtual machine setup.
+It is expected to work on both x86_64 and aarch64 Debian Linux of versions 10 to 12.
+Note that this is a complete development environment that takes a significant amount of disk space (~20GB).
 
 # Known Issues
 
@@ -35,6 +37,12 @@ This is my virtual machine setup. It is expected to work on both x86_64 and aarc
 
    ```bash
    ansible-galaxy collection install community.general
+   ```
+
+   In case you do not have Ansible of version CHANGEME you can still try the following command:
+
+   ```bash
+   ansible-galaxy install -r requirements.yml --server="https://old-galaxy.ansible.com" --ignore-certs
    ```
 
 3. Create and edit your configuration.
