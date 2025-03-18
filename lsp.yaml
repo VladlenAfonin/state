@@ -1,4 +1,5 @@
 ---
+# Lua language server.
 - name: "lua-language-server: check if installed"
   stat:
     path: "{{ ansible_env.HOME }}/apps/lua-language-server"
@@ -23,3 +24,13 @@
     src: "{{ ansible_env.HOME }}/projects/lua-language-server"
     dest: "{{ ansible_env.HOME }}/apps/lua-language-server"
     state: link
+
+# Rust analyzer
+- name: "rust-analyzer: check if installed"
+  shell: rust-analyzer --version
+  register: rust_analyzer_status
+  ignore_errors: true
+  changed_when: false
+- name: "rust-analyzer: instsall"
+  shell: rustup component add rust-analyzer
+  when: rust_analyzer_status is failed
