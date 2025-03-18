@@ -29,5 +29,5 @@
 1. Run the playbook.
 
    ```bash
-   ansible-playbook src/bootstrap.yaml --extra-vars="@config.json"
+   ansible-playbook src/bootstrap.yaml --extra-vars="@config.json" --ask-become-pass
    ```
