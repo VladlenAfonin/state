@@ -1,0 +1,31 @@
+---
+- name: "ghcup: check if installed"
+  shell: |
+    . "${HOME}/.profile"
+    ghcup --help
+  register: ghcup_installed
+  ignore_errors: true
+  changed_when: false
+- name: "ghcup: install build dependencies"
+  when: ghcup_installed is failed
+  become: true
+  apt:
+    name:
+      # TODO: Check if this works on older Debian versions.
+      - build-essential
+      - curl
+      - libffi-dev
+      - libffi8ubuntu1
+      - libgmp-dev
+      - libgmp10
+      - libncurses-dev
+      - libncurses6
+      - libtinfo6
+    state: present
+    update_cache: yes
+- name: "ghcup: install"
+  when: ghcup_installed is failed
+  shell:
+    cmd: |
+      . "${HOME}/.profile"
+      curl --proto '=https' --tlsv1.2 -sSf https://get-ghcup.haskell.org | BOOTSTRAP_HASKELL_NONINTERACTIVE=1 BOOTSTRAP_HASKELL_GHC_VERSION=latest BOOTSTRAP_HASKELL_CABAL_VERSION=latest BOOTSTRAP_HASKELL_INSTALL_STACK=0 BOOTSTRAP_HASKELL_INSTALL_HLS=1 BOOTSTRAP_HASKELL_ADJUST_BASHRC=P sh

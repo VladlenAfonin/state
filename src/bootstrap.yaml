@@ -32,5 +32,6 @@
     - include_tasks: rust.yaml
     - include_tasks: zig.yaml
     - include_tasks: node.yaml
+    - include_tasks: haskell.yaml
     - include_tasks: fmt.yaml
     - include_tasks: lsp.yaml
