@@ -34,3 +34,14 @@
 - name: "rust-analyzer: instsall"
   shell: rustup component add rust-analyzer
   when: rust_analyzer_status is failed
+
+# Clangd
+- name: "clangd: install"
+  become: true
+  apt:
+    name:
+      - clangd
+    state: present
+    update_cache: yes
+
+
