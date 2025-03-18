@@ -30,7 +30,7 @@
 - name: "neovim: build"
   when: not neovim_status.stat.exists
   shell:
-    shell: make install CMAKE_INSTALL_PREFIX="${HOME}/apps/neovim" CMAKE_BUILD_TYPE=RelWithDebInfo
+    cmd: make install CMAKE_INSTALL_PREFIX="${HOME}/apps/neovim" CMAKE_BUILD_TYPE=RelWithDebInfo
     chdir: "{{ projects_dir }}/neovim"
 - name: "neovim: create configuration directories"
   file:

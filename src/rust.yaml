@@ -1,6 +1,9 @@
 ---
 - name: "rustup: check if installed"
-  shell: rustc --version
+  shell:
+    cmd: |
+      . "${HOME}/.profile"
+      rustc --version
   register: cargo_exists
   changed_when: false
   ignore_errors: true
