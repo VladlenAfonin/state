@@ -1,0 +1,62 @@
+---
+# Stylua
+- name: "stylua: install"
+  community.general.cargo:
+    name: "stylua"
+- name: "stylua: create configuration directory"
+  file:
+    path: "{{ home_dir }}/.config/stylua"
+    state: directory
+    mode: "0755"
+- name: "stylua: install configuration"
+  template:
+    src: templates/stylua.toml.j2
+    dest: "{{ home_dir }}/.config/stylua/stylua.toml"
+    mode: "0644"
+
+# Clang Format
+- name: "clang-format: install"
+  become: true
+  apt:
+    name:
+      - clang-format
+    state: present
+    update_cache: yes
+
+# Prettier
+- name: "prettier: install"
+  community.general.npm:
+    name: prettier
+    global: true
+
+# Shfmt
+- name: "shfmt: check if installed"
+  shell:
+    cmd: |
+      . "${HOME}/.profile"
+      shfmt --version
+  register: shfmt_status
+  ignore_errors: true
+  changed_when: false
+- name: "shfmt: download"
+  when: shfmt_status is failed
+  get_url:
+    # TODO: Replace OS and arch.
+    url: "https://github.com/mvdan/sh/releases/download/{{ shfmt_version }}/shfmt_{{ shfmt_version }}_linux_amd64"
+    dest: /tmp/shfmt
+    mode: "0755"
+    force: "yes"
+- name: "shfmt: create directory"
+  when: shfmt_status is failed
+  file:
+    path: "{{ apps_dir }}/shfmt/bin"
+    state: directory
+    mode: "0755"
+- name: "shfmt: install"
+  when: shfmt_status is failed
+  copy:
+    src: "/tmp/shfmt"
+    dest: "{{ apps_dir }}/shfmt/bin/shfmt"
+    remote_src: true
+    mode: "0755"
+

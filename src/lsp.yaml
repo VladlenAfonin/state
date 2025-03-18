@@ -2,7 +2,7 @@
 # Lua language server.
 - name: "lua-language-server: check if installed"
   stat:
-    path: "{{ home_dir }}/apps/lua-language-server"
+    path: "{{ apps_dir }}/lua-language-server"
   register: lls_status
   ignore_errors: true
   changed_when: false
@@ -10,19 +10,19 @@
   when: not lls_status.stat.exists
   git:
     repo: "https://github.com/LuaLS/lua-language-server"
-    dest: "{{ home_dir }}/projects/lua-language-server"
+    dest: "{{ projects_dir }}/lua-language-server"
     version: "3.13.9"
     depth: 1
 - name: "lua-language-server: build"
   when: not lls_status.stat.exists
   shell:
     cmd: ./make.sh
-    chdir: "{{ home_dir }}/projects/lua-language-server"
+    chdir: "{{ projects_dir }}/lua-language-server"
 - name: "lua-language-server: install"
   when: not lls_status.stat.exists
   file:
-    src: "{{ home_dir }}/projects/lua-language-server"
-    dest: "{{ home_dir }}/apps/lua-language-server"
+    src: "{{ projects_dir }}/lua-language-server"
+    dest: "{{ apps_dir }}/lua-language-server"
     state: link
 
 # Rust analyzer
@@ -67,3 +67,14 @@
       zig build -Doptimize=ReleaseSafe --prefix "{{ apps_dir }}/zls"
     chdir: "{{ projects_dir }}/zls"
 
+# BLS
+- name: "bash-language-server: install"
+  community.general.npm:
+    name: bash-language-server
+    global: true
+
+# Pyright
+- name: "Pyright: install"
+  community.general.npm:
+    name: pyright
+    global: true

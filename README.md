@@ -1,3 +1,11 @@
+# Table of Contents
+
+<!-- mtoc start -->
+
+- [Setup](#setup)
+
+<!-- mtoc end -->
+
 # Setup
 
 1. Install Ansible.
@@ -21,5 +29,5 @@
 1. Run the playbook.
 
    ```bash
-   ansible-playbook bootstrap.yaml --extra-vars="@config.json"
+   ansible-playbook src/bootstrap.yaml --extra-vars="@config.json"
    ```

@@ -19,9 +19,17 @@
     - { repo: "https://github.com/zsh-users/zsh-autosuggestions", version: "v0.7.1", name: "zsh-autosuggestions" }
 - name: "zsh: install configuration"
   template:
-    src: templates/.zshrc.j2
-    dest: "{{ ansible_env.HOME }}/.zshrc"
+    src: "templates/{{ item.template }}"
+    dest: "{{ home_dir }}/{{ item.dest }}"
     mode: "0644"
+  loop:
+    - { template: ".zshrc.j2", dest: ".zshrc" }
+    - { template: ".profile.j2", dest: ".profile" }
+- name: "zsh: link .zprofile"
+  file:
+    src: "{{ home_dir }}/.profile"
+    dest: "{{ home_dir }}/.zprofile"
+    state: link
 - name: "zsh: change shell"
   become: yes
   user:
