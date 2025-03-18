@@ -10,7 +10,6 @@
 - name: "neovim: install build dependencies"
   when: not neovim_status.stat.exists
   become: true
-  become_method: sudo
   apt:
     name:
       - ninja-build
