@@ -15,8 +15,16 @@
     depth: 1
     dest: "{{ projects_dir }}/{{ item.name }}"
   loop:
-    - { repo: "https://github.com/zsh-users/zsh-syntax-highlighting", version: "0.8.0", name: "zsh-syntax-highlighting" }
-    - { repo: "https://github.com/zsh-users/zsh-autosuggestions", version: "v0.7.1", name: "zsh-autosuggestions" }
+    - {
+        repo: "https://github.com/zsh-users/zsh-syntax-highlighting",
+        version: "0.8.0",
+        name: "zsh-syntax-highlighting",
+      }
+    - {
+        repo: "https://github.com/zsh-users/zsh-autosuggestions",
+        version: "v0.7.1",
+        name: "zsh-autosuggestions",
+      }
 - name: "zsh: install configuration"
   template:
     src: "templates/{{ item.template }}"

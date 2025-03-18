@@ -59,4 +59,3 @@
     dest: "{{ apps_dir }}/shfmt/bin/shfmt"
     remote_src: true
     mode: "0755"
-

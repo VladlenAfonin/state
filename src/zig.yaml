@@ -24,4 +24,3 @@
     ZIG_DIR="${HOME}/apps/zig-linux-{{ ansible_architecture }}-{{ zig_version }}" 
     mkdir "${ZIG_DIR}/bin"
     mv "${ZIG_DIR}/zig" "${ZIG_DIR}/bin/zig"
-

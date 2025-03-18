@@ -7,4 +7,3 @@
     - name: "sample print"
       debug:
         msg: "{{ current_shell }}"
-

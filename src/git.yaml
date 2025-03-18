@@ -12,4 +12,8 @@
     dest: "{{ home_dir }}/.gitconfig"
     mode: "0644"
   vars:
-    user: { name: "{{ external.git.user.name }}", email: "{{ external.git.user.email }}" }
+    user:
+      {
+        name: "{{ external.git.user.name }}",
+        email: "{{ external.git.user.email }}",
+      }
