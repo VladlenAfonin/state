@@ -17,6 +17,7 @@ This is my virtual machine setup. It is expected to work on both x86_64 and aarc
 # Setup
 
 1. Install Ansible.
+   Ansible version >= 2.13.9 is required.
 
    - use either `pipx` (recommended)
 
