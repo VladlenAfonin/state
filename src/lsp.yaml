@@ -6,6 +6,14 @@
   register: lls_status
   ignore_errors: true
   changed_when: false
+- name: "lua-language-server: install build dependencies"
+  when: not lls_status.stat.exists
+  become: true
+  apt:
+    name:
+      - build-essential
+    state: present
+    update_cache: yes
 - name: "lua-language-server: clone"
   when: not lls_status.stat.exists
   git:
