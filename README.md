@@ -18,9 +18,17 @@ This is my virtual machine setup. It is expected to work on both x86_64 and aarc
 
 1. Install Ansible.
 
-   ```bash
-   pipx install --include-deps ansible
-   ```
+   - use either `pipx` (recommended)
+
+     ```bash
+     pipx install --include-deps ansible
+     ```
+
+   - or use `pip`
+
+     ```bash
+     python3 -m pip install --user ansible
+     ```
 
 2. Install Ansible dependencies.
 
