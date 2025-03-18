@@ -6,9 +6,9 @@
     home_dir: "{{ ansible_env.HOME }}"
     projects_dir: "{{ ansible_env.HOME }}/projects"
     apps_dir: "{{ ansible_env.HOME }}/apps"
-    zig_version: "{{ external.zig.version | default: \"0.14.0\" }}"
-    nvm_version: "{{ external.nvm.version | default: \"v0.40.2\" }}"
-    shfmt_version: "{{ external.shfmt.version | default: \"v3.11.0\" }}"
+    zig_version: "{{ external.zig.version | default(\"0.14.0\") }}"
+    nvm_version: "{{ external.nvm.version | default(\"v0.40.2\") }}"
+    shfmt_version: "{{ external.shfmt.version | default(\"v3.11.0\") }}"
   pre_tasks:
     - name: Update and upgrade.
       become: true
