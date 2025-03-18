@@ -1,0 +1,35 @@
+---
+# ansible_architecture
+- name: "zig: check if installed"
+  shell: |
+    source "${HOME}/.zshrc"
+    zig --version
+  register: zig_installed
+  ignore_errors: true
+  changed_when: false
+  args:
+    executable: "{{ current_shell }}"
+- name: "zig: download ({{ ansible_architecture }})"
+  when: zig_installed is failed
+  get_url:
+    url: "https://ziglang.org/download/{{ version }}/zig-linux-{{ ansible_architecture }}-{{ version }}.tar.xz"
+    dest: /tmp/zig.tar.gz
+    mode: "0644"
+    force: false
+  vars:
+    version: "0.14.0"
+- name: "zig: create directory"
+  file:
+    path: "{{ ansible_env.HOME }}/apps/zig"
+    state: directory
+    mode: "0755"
+- name: "zig: extract"
+  when: zig_installed is failed
+  unarchive:
+    src: /tmp/zig.tar.gz
+    dest: "{{ ansible_env.HOME }}/apps"
+- name: "zig: cleanup"
+  when: zig_installed is failed
+  shell: |
+    mv "${HOME}/apps/zig-linux-{{ ansible_architecture }}-{{ version }}" "${HOME}/apps/zig"
+

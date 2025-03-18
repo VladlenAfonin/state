@@ -10,6 +10,8 @@
   git:
     repo: "{{ item.repo }}"
     version: "{{ item.version }}"
+    update: false
+    force: true
     depth: 1
     dest: "{{ ansible_env.HOME }}/projects/{{ item.name }}"
   loop:
