@@ -2,7 +2,7 @@
 # Lua language server.
 - name: "lua-language-server: check if installed"
   stat:
-    path: "{{ ansible_env.HOME }}/apps/lua-language-server"
+    path: "{{ home_dir }}/apps/lua-language-server"
   register: lls_status
   ignore_errors: true
   changed_when: false
@@ -10,19 +10,19 @@
   when: not lls_status.stat.exists
   git:
     repo: "https://github.com/LuaLS/lua-language-server"
-    dest: "{{ ansible_env.HOME }}/projects/lua-language-server"
+    dest: "{{ home_dir }}/projects/lua-language-server"
     version: "3.13.9"
     depth: 1
 - name: "lua-language-server: build"
   when: not lls_status.stat.exists
-  command: ./make.sh
-  args:
-    chdir: "{{ ansible_env.HOME }}/projects/lua-language-server"
+  shell:
+    cmd: ./make.sh
+    chdir: "{{ home_dir }}/projects/lua-language-server"
 - name: "lua-language-server: install"
   when: not lls_status.stat.exists
   file:
-    src: "{{ ansible_env.HOME }}/projects/lua-language-server"
-    dest: "{{ ansible_env.HOME }}/apps/lua-language-server"
+    src: "{{ home_dir }}/projects/lua-language-server"
+    dest: "{{ home_dir }}/apps/lua-language-server"
     state: link
 
 # Rust analyzer
@@ -44,4 +44,26 @@
     state: present
     update_cache: yes
 
+# ZLS
+- name: "zls: check if installed"
+  shell: |
+    . "${HOME}/.profile"
+    zls --version
+  register: zls_status
+  ignore_errors: true
+  changed_when: false
+- name: "zls: clone"
+  when: zls_status is failed
+  git:
+    repo: "https://github.com/zigtools/zls"
+    version: "{{ zig_version }}"
+    dest: "{{ projects_dir }}/zls"
+    depth: 1
+- name: "zls: build"
+  when: zls_status is failed
+  shell:
+    cmd: |
+      . "${HOME}/.profile"
+      zig build -Doptimize=ReleaseSafe --prefix "{{ apps_dir }}/zls"
+    chdir: "{{ projects_dir }}/zls"
 

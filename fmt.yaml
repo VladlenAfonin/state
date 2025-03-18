@@ -4,13 +4,13 @@
     name: "stylua"
 - name: "stylua: create configuration directory"
   file:
-    path: "{{ ansible_env.HOME }}/.config/stylua"
+    path: "{{ home_dir }}/.config/stylua"
     state: directory
     mode: "0755"
 - name: "stylua: install configuration"
   template:
     src: templates/stylua.toml.j2
-    dest: "{{ ansible_env.HOME }}/.config/stylua/stylua.toml"
+    dest: "{{ home_dir }}/.config/stylua/stylua.toml"
     mode: "0644"
 - name: "clang-format: install"
   become: true

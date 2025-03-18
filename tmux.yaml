@@ -9,5 +9,5 @@
 - name: "tmux: install configuration"
   template:
     src: templates/.tmux.conf.j2
-    dest: "{{ ansible_env.HOME }}/.tmux.conf"
+    dest: "{{ home_dir }}/.tmux.conf"
     mode: "0644"

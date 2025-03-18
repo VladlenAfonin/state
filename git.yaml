@@ -9,7 +9,7 @@
 - name: "git: install configuration"
   template:
     src: templates/.gitconfig.j2
-    dest: "{{ ansible_env.HOME }}/.gitconfig"
+    dest: "{{ home_dir }}/.gitconfig"
     mode: "0644"
   vars:
     user: { name: "{{ external.git.user.name }}", email: "{{ external.git.user.email }}" }

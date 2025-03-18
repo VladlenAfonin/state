@@ -3,7 +3,11 @@
   gather_facts: true
   vars:
     current_user: "{{ ansible_env.USER }}"
-    current_shell: "/bin/zsh"
+    home_dir: "{{ ansible_env.HOME }}"
+    projects_dir: "{{ ansible_env.HOME }}/projects"
+    apps_dir: "{{ ansible_env.HOME }}/apps"
+    zig_version: "0.14.0"
+    nvm_version: "v0.40.2"
   pre_tasks:
     - name: Update and upgrade.
       become: true
@@ -13,7 +17,7 @@
         update_cache: yes
     - name: Create base directories.
       file:
-        path: "{{ ansible_env.HOME }}/{{ item }}"
+        path: "{{ home_dir }}/{{ item }}"
         state: directory
         mode: "0755"
       loop:
@@ -25,7 +29,7 @@
     - include_tasks: neovim.yaml
     - include_tasks: tmux.yaml
     - include_tasks: rust.yaml
+    - include_tasks: zig.yaml
     - include_tasks: node.yaml
     - include_tasks: fmt.yaml
     - include_tasks: lsp.yaml
-    - include_tasks: zig.yaml
