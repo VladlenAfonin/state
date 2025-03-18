@@ -21,8 +21,6 @@
       - libncurses-dev
       - libncurses6
       - libtinfo6
-    state: present
-    update_cache: yes
 - name: "ghcup: install"
   when: ghcup_installed is failed
   shell:

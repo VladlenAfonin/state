@@ -4,8 +4,6 @@
   apt:
     name:
       - zsh
-    state: present
-    update_cache: yes
 - name: "zsh: install plugins"
   git:
     repo: "{{ item.repo }}"

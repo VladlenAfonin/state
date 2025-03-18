@@ -36,3 +36,4 @@
     - include_tasks: dotnet.yaml
     - include_tasks: fmt.yaml
     - include_tasks: lsp.yaml
+    - include_tasks: extra.yaml

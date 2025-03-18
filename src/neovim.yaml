@@ -17,8 +17,6 @@
       - cmake
       - unzip
       - curl
-    state: present
-    update_cache: yes
 - name: "neovim: clone"
   when: not neovim_status.stat.exists
   git:

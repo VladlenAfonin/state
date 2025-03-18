@@ -12,8 +12,6 @@
   apt:
     name:
       - build-essential
-    state: present
-    update_cache: yes
 - name: "lua-language-server: clone"
   when: not lls_status.stat.exists
   git:
@@ -49,8 +47,6 @@
   apt:
     name:
       - clangd
-    state: present
-    update_cache: yes
 
 # ZLS
 - name: "zls: check if installed"

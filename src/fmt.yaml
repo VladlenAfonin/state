@@ -20,8 +20,6 @@
   apt:
     name:
       - clang-format
-    state: present
-    update_cache: yes
 
 # Prettier
 - name: "prettier: install"
@@ -77,5 +75,3 @@
     name:
       # TODO: Check if works on older OSes.
       - black
-    state: present
-    update_cache: yes
