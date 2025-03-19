@@ -5,6 +5,9 @@
                 "name": "biba",
                 "email": "boba@example.com"
             }
+        },
+        "haskell": {
+            "enable": true
         }
     }
 }

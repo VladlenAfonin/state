@@ -77,6 +77,8 @@
 
 # Stylish haskell
 - name: "stylish-haskell: check if installed"
+  when:
+    - external.haskell.enable == true
   shell:
     cmd: |
       . "${HOME}/.profile"
@@ -85,7 +87,9 @@
   ignore_errors: true
   changed_when: false
 - name: "stylish-haskell: install"
-  when: stylish_haskell_installed is failed
+  when:
+    - external.haskell.enable == true
+    - stylish_haskell_installed is failed
   shell:
     cmd: |
       . "${HOME}/.profile"
