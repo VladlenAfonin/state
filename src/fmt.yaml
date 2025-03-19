@@ -36,7 +36,7 @@
   register: shfmt_status
   ignore_errors: true
   changed_when: false
-- name: "shfmt: download (amd64)"
+- name: "shfmt: download (x86_64)"
   when:
     - shfmt_status is failed
     - ansible_architecture == "x86_64"
@@ -44,8 +44,7 @@
     url: "https://github.com/mvdan/sh/releases/download/{{ shfmt_version }}/shfmt_{{ shfmt_version }}_linux_amd64"
     dest: /tmp/shfmt
     mode: "0755"
-    force: "yes"
-- name: "shfmt: download (arm64)"
+- name: "shfmt: download (aarch64)"
   when:
     - shfmt_status is failed
     - ansible_architecture == "aarch64"
