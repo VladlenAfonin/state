@@ -9,6 +9,7 @@
     zig_version: '{{ external.zig.version | default("0.14.0") }}'
     nvm_version: '{{ external.nvm.version | default("v0.40.2") }}'
     shfmt_version: '{{ external.shfmt.version | default("v3.11.0") }}'
+    omnisharp_version: '{{ external.omnisharp.version | default("v1.39.13") }}'
   pre_tasks:
     - name: Update and upgrade.
       become: true

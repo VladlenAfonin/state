@@ -6,4 +6,4 @@
   tasks:
     - name: "sample print"
       debug:
-        msg: "{{ current_shell }}"
+        msg: "{{ ansible_architecture }}"
