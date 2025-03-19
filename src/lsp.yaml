@@ -48,6 +48,12 @@
     name:
       - clangd
 
+# Ansible LS
+- name: "ansible-language-server: install"
+  community.general.npm:
+    name: "@ansible/ansible-language-server"
+    global: true
+
 # ZLS
 - name: "zls: check if installed"
   shell: |
