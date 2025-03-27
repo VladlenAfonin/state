@@ -108,7 +108,7 @@
 - name: "omnisharp: download (aarch64)"
   when:
     - not omnisharp_status.stat.exists
-    - ansible_architecture == "x86_64"
+    - ansible_architecture == "aarch64"
   get_url:
     url: "https://github.com/OmniSharp/omnisharp-roslyn/releases/download/{{ omnisharp_version }}/omnisharp-linux-arm64-net6.0.tar.gz"
     dest: /tmp/omnisharp.tar.gz
