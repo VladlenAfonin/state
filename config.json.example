@@ -7,7 +7,7 @@
             }
         },
         "haskell": {
-            "enable": true
+            "enable": false
         }
     }
 }
