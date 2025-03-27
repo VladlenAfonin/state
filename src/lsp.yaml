@@ -124,3 +124,17 @@
   unarchive:
     src: /tmp/omnisharp.tar.gz
     dest: "{{ apps_dir }}/omnisharp"
+
+- name: "vscode-langservers-extracted: install"
+  community.general.npm:
+    name: vscode-langservers-extracted
+    global: true
+
+- name: "typescript: install"
+  community.general.npm:
+    name: typescript
+    global: true
+- name: "typescript-language-server: install"
+  community.general.npm:
+    name: typescript-language-server
+    global: true
