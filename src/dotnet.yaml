@@ -35,15 +35,3 @@
   unarchive:
     src: /tmp/dotnet.tar.gz
     dest: "{{ apps_dir }}/dotnet"
-- name: "dotnet: create bin directory"
-  when: dotnet_installed is failed
-  file:
-    path: "{{ apps_dir }}/dotnet/bin"
-    state: directory
-    mode: "0755"
-- name: "dotnet: symlink executable"
-  when: dotnet_installed is failed
-  file:
-    src: "{{ apps_dir }}/dotnet/dotnet"
-    dest: "{{ apps_dir }}/dotnet/bin/dotnet"
-    state: link
