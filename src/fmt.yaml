@@ -94,3 +94,18 @@
     cmd: |
       . "${HOME}/.profile"
       cabal install stylish-haskell
+
+# Csharpier
+- name: "csharpier: check if installed"
+  shell:
+    cmd: |
+      . "${HOME}/.profile"
+      dotnet csharpier --version
+  register: csharpier_installed
+- name: "csharpier: install"
+  when:
+    - csharpier_installed is failed
+  shell:
+    cmd: |
+      . "${HOME}/.profile"
+      dotnet tool install csharpier -g
