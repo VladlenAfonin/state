@@ -89,41 +89,7 @@
     name: pyright
     global: true
 
-# OmniSharp
-- name: "omnisharp: check if installed"
-  stat:
-    path: "{{ apps_dir }}/omnisharp/OmniSharp.dll"
-  register: omnisharp_status
-  ignore_errors: true
-  changed_when: false
-- name: "omnisharp: download (x86_64)"
-  when:
-    - not omnisharp_status.stat.exists
-    - ansible_architecture == "x86_64"
-  get_url:
-    url: "https://github.com/OmniSharp/omnisharp-roslyn/releases/download/{{ omnisharp_version }}/omnisharp-linux-x64-net6.0.tar.gz"
-    dest: /tmp/omnisharp.tar.gz
-    mode: "0644"
-    force: false
-- name: "omnisharp: download (aarch64)"
-  when:
-    - not omnisharp_status.stat.exists
-    - ansible_architecture == "aarch64"
-  get_url:
-    url: "https://github.com/OmniSharp/omnisharp-roslyn/releases/download/{{ omnisharp_version }}/omnisharp-linux-arm64-net6.0.tar.gz"
-    dest: /tmp/omnisharp.tar.gz
-    mode: "0644"
-    force: false
-- name: "omhisharp: create directory"
-  when: not omnisharp_status.stat.exists
-  file:
-    path: "{{ apps_dir }}/omnisharp"
-    state: directory
-- name: "omnisharp: extract"
-  when: not omnisharp_status.stat.exists
-  unarchive:
-    src: /tmp/omnisharp.tar.gz
-    dest: "{{ apps_dir }}/omnisharp"
+# TODO: Add Roslyn
 
 - name: "vscode-langservers-extracted: install"
   community.general.npm:
