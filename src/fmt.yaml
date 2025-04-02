@@ -102,6 +102,8 @@
       . "${HOME}/.profile"
       dotnet csharpier --version
   register: csharpier_installed
+  ignore_errors: true
+  changed_when: false
 - name: "csharpier: install"
   when:
     - csharpier_installed is failed
