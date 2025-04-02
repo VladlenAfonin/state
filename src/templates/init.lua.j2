@@ -284,6 +284,8 @@ vim.api.nvim_create_autocmd("BufWritePre", {
     command = "Neoformat",
 })
 
+vim.g.neoformat_enabled_cs = { "csharpier", "clang-format" }
+
 -- This is where you enable features that only work
 -- if there is a language server active in the file
 vim.api.nvim_create_autocmd("LspAttach", {
