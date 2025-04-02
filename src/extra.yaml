@@ -4,3 +4,4 @@
   apt:
     name:
       - clang
+      - ripgrep

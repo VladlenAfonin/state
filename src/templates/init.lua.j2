@@ -1,3 +1,6 @@
+-- Leader.
+vim.g.mapleader = " "
+
 -- Disable netrw at the very start of your init.lua.
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
@@ -54,6 +57,7 @@ lazy.setup({
     { "https://codeberg.org/FelipeLema/cmp-async-path" },
     { "ctrlpvim/ctrlp.vim" },
     { "hedyhli/markdown-toc.nvim" },
+    { "nvim-telescope/telescope.nvim" },
 })
 
 require("onedark").load()
@@ -156,11 +160,14 @@ require("mtoc").setup({
     },
 })
 
--- Leader.
-vim.g.mapleader = " "
+local builtin = require("telescope.builtin")
+vim.keymap.set("n", "<leader>ff", builtin.find_files, { desc = "Telescope find files" })
+vim.keymap.set("n", "<leader>fg", builtin.live_grep, { desc = "Telescope live grep" })
+vim.keymap.set("n", "<leader>fb", builtin.buffers, { desc = "Telescope buffers" })
+vim.keymap.set("n", "<leader>fh", builtin.help_tags, { desc = "Telescope help tags" })
 
 -- Mouse.
-vim.opt.mouse = "a"
+vim.opt.mouse = ""
 
 -- Numbers.
 vim.opt.number = true
