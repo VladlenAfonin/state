@@ -70,11 +70,10 @@ lazy.setup({
 })
 
 require("smear_cursor").setup({
-    {
-        stiffness = 0.8,
-        trailing_stiffness = 0.5,
-        distance_stop_animating = 0.5,
-    },
+    stiffness = 0.8,
+    trailing_stiffness = 0.5,
+    distance_stop_animating = 0.5,
+    smear_to_cmd = false,
 })
 require("onedark").load()
 require("lualine").setup({
@@ -215,6 +214,7 @@ vim.keymap.set("i", "<C-o>", "<Esc>O")
 -- Quick Configuration Edit.
 vim.keymap.set("n", "<Leader>e", ":e $MYVIMRC<Cr>")
 vim.keymap.set("n", "<Leader>r", ":source $MYVIMRC<Cr>")
+vim.keymap.set("n", "<Leader>z", ":ZenMode")
 
 -- No Highlight.
 vim.keymap.set("n", "<Leader>m", ":noh<Cr>", { silent = true })
