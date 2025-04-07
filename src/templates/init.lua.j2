@@ -212,9 +212,9 @@ vim.keymap.set("i", "``", "``<Esc>i")
 vim.keymap.set("i", "<C-o>", "<Esc>O")
 
 -- Quick Configuration Edit.
-vim.keymap.set("n", "<Leader>e", ":e $MYVIMRC<Cr>")
-vim.keymap.set("n", "<Leader>r", ":source $MYVIMRC<Cr>")
-vim.keymap.set("n", "<Leader>z", ":ZenMode")
+vim.keymap.set("n", "<Leader>e", ":e $MYVIMRC<Cr>", { silent = true })
+vim.keymap.set("n", "<Leader>r", ":source $MYVIMRC<Cr>", { silent = true })
+vim.keymap.set("n", "<Leader>z", ":ZenMode<Cr>", { silent = true })
 
 -- No Highlight.
 vim.keymap.set("n", "<Leader>m", ":noh<Cr>", { silent = true })
