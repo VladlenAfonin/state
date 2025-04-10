@@ -55,7 +55,6 @@ lazy.setup({
     { "saadparwaiz1/cmp_luasnip" },
     { "sbdchd/neoformat" },
     { "https://codeberg.org/FelipeLema/cmp-async-path" },
-    { "ctrlpvim/ctrlp.vim" },
     { "hedyhli/markdown-toc.nvim" },
     { "nvim-telescope/telescope.nvim" },
     {
@@ -67,14 +66,10 @@ lazy.setup({
     },
     { "folke/zen-mode.nvim" },
     { "sphamba/smear-cursor.nvim" },
+    { "nvim-pack/nvim-spectre" },
 })
 
-require("smear_cursor").setup({
-    stiffness = 0.8,
-    trailing_stiffness = 0.5,
-    distance_stop_animating = 0.5,
-    smear_to_cmd = false,
-})
+require("smear_cursor").setup()
 require("onedark").load()
 require("lualine").setup({
     options = {
@@ -174,15 +169,29 @@ require("mtoc").setup({
         pattern = "*.{md,mdown,mkd,mkdn,markdown,mdwn}",
     },
 })
+require("spectre").setup()
+
+vim.keymap.set("n", "<Leader>S", '<Cmd>lua require("spectre").toggle()<Cr>', {
+    desc = "Toggle Spectre",
+})
+vim.keymap.set("n", "<Leader>sw", '<Cmd>lua require("spectre").open_visual({select_word=true})<Cr>', {
+    desc = "Search current word",
+})
+vim.keymap.set("v", "<Leader>sw", '<Esc><Cmd>lua require("spectre").open_visual()<Cr>', {
+    desc = "Search current word",
+})
+vim.keymap.set("n", "<Leader>sp", '<Cmd>lua require("spectre").open_file_search({select_word=true})<Cr>', {
+    desc = "Search on current file",
+})
 
 local builtin = require("telescope.builtin")
-vim.keymap.set("n", "<leader>ff", builtin.find_files, { desc = "Telescope find files" })
-vim.keymap.set("n", "<leader>fg", builtin.live_grep, { desc = "Telescope live grep" })
-vim.keymap.set("n", "<leader>fb", builtin.buffers, { desc = "Telescope buffers" })
-vim.keymap.set("n", "<leader>fh", builtin.help_tags, { desc = "Telescope help tags" })
+vim.keymap.set("n", "<Leader>ff", builtin.find_files, { desc = "Telescope find files" })
+vim.keymap.set("n", "<Leader>fg", builtin.live_grep, { desc = "Telescope live grep" })
+vim.keymap.set("n", "<Leader>fb", builtin.buffers, { desc = "Telescope buffers" })
+vim.keymap.set("n", "<Leader>fh", builtin.help_tags, { desc = "Telescope help tags" })
 
 -- Mouse.
-vim.opt.mouse = ""
+vim.opt.mouse = "a"
 
 -- Numbers.
 vim.opt.number = true
@@ -371,48 +380,6 @@ require("lspconfig").pyright.setup({})
 require("lspconfig").bashls.setup({})
 require("lspconfig").hls.setup({
     filetypes = { "haskell", "lhaskell", "cabal" },
-})
-require("lspconfig").omnisharp.setup({
-    cmd = { "dotnet", "{{ apps_dir }}/omnisharp/OmniSharp.dll" },
-
-    settings = {
-        FormattingOptions = {
-            -- Enables support for reading code style, naming convention and analyzer
-            -- settings from .editorconfig.
-            EnableEditorConfigSupport = true,
-            -- Specifies whether 'using' directives should be grouped and sorted during
-            -- document formatting.
-            OrganizeImports = nil,
-        },
-        MsBuild = {
-            -- If true, MSBuild project system will only load projects for files that
-            -- were opened in the editor. This setting is useful for big C# codebases
-            -- and allows for faster initialization of code navigation features only
-            -- for projects that are relevant to code that is being edited. With this
-            -- setting enabled OmniSharp may load fewer projects and may thus display
-            -- incomplete reference lists for symbols.
-            LoadProjectsOnDemand = nil,
-        },
-        RoslynExtensionsOptions = {
-            -- Enables support for roslyn analyzers, code fixes and rulesets.
-            EnableAnalyzersSupport = nil,
-            -- Enables support for showing unimported types and unimported extension
-            -- methods in completion lists. When committed, the appropriate using
-            -- directive will be added at the top of the current file. This option can
-            -- have a negative impact on initial completion responsiveness,
-            -- particularly for the first few completion sessions after opening a
-            -- solution.
-            EnableImportCompletion = nil,
-            -- Only run analyzers against open files when 'enableRoslynAnalyzers' is
-            -- true
-            AnalyzeOpenDocumentsOnly = nil,
-        },
-        Sdk = {
-            -- Specifies whether to include preview versions of the .NET SDK when
-            -- determining which version to use for project loading.
-            IncludePrereleases = true,
-        },
-    },
 })
 require("lspconfig").ansiblels.setup({
     settings = {
